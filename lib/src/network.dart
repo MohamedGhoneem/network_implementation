@@ -14,15 +14,15 @@ export 'http_method.dart';
 
 abstract class Network {
   final String _baseUrl;
+  Options? options;
 
-  Network(
-    this._baseUrl,
-  );
+
+  Network(this._baseUrl,
+      {this.options});
 
   final Dio _dio = Dio();
 
-  Future<Response?> request(
-    HttpMethod method, {
+  Future<Response?> request(HttpMethod method, {
     required String endpoint,
     Map<String, dynamic>? queryParameters,
     body,
@@ -42,17 +42,17 @@ abstract class Network {
           return response;
         case HttpMethod.post:
           response =
-              await _dio.post(url, data: body, options: _options(headers));
+          await _dio.post(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.put:
           response =
-              await _dio.put(url, data: body, options: _options(headers));
+          await _dio.put(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.patch:
           response =
-              await _dio.patch(url, data: body, options: _options(headers));
+          await _dio.patch(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.delete:
@@ -110,21 +110,33 @@ abstract class Network {
     };
     if (headers == null || headers.isEmpty) {
       logRequest('headers : $baseHeaders');
-      return Options(
-          sendTimeout: const Duration(seconds: 5), // 5 seconds
-          receiveTimeout: const Duration(seconds: 5), // 5 seconds
-          headers: baseHeaders);
+
+      if (options != null) {
+        options?.headers = baseHeaders;
+        return options!;
+      } else {
+        return Options(
+            sendTimeout: const Duration(seconds: 5), // 5 seconds
+            receiveTimeout: const Duration(seconds: 5), // 5 seconds
+            headers: baseHeaders);
+      }
     } else {
       logRequest('headers : $headers');
-      return Options(
-          sendTimeout: const Duration(seconds: 5), // 5 seconds
-          receiveTimeout: const Duration(seconds: 5), // 5 seconds
-          headers: headers);
+
+      if (options != null) {
+        options?.headers = baseHeaders;
+        return options!;
+      } else {
+        return Options(
+            sendTimeout: const Duration(seconds: 5), // 5 seconds
+            receiveTimeout: const Duration(seconds: 5), // 5 seconds
+            headers: headers);
+      }
     }
   }
 
   void logError(String text) {
-    debugPrint('\x1B[31m$text\x1B[0m', );
+    debugPrint('\x1B[31m$text\x1B[0m',);
   }
 
   void logResponse(String text) {
