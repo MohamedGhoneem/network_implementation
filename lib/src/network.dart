@@ -108,13 +108,16 @@ abstract class Network {
     Map<String, dynamic>? baseHeaders = {
       'Accept': 'application/json',
     };
-    if (headers == null || headers.isEmpty) {
-      logRequest('headers : $baseHeaders');
 
+    if (headers == null || headers.isEmpty) {
       if (options != null) {
-        options?.headers = baseHeaders;
+        //options?.headers = baseHeaders;
+        logRequest('headers : ${options?.headers}');
+
         return options!;
       } else {
+        logRequest('headers : $baseHeaders');
+
         return Options(
             sendTimeout: const Duration(seconds: 5), // 5 seconds
             receiveTimeout: const Duration(seconds: 5), // 5 seconds
@@ -124,7 +127,7 @@ abstract class Network {
       logRequest('headers : $headers');
 
       if (options != null) {
-        options?.headers = baseHeaders;
+        options?.headers = headers;
         return options!;
       } else {
         return Options(
