@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:isolate';
 
+///==========================================================
+/// CREATED BY MOHAMED GHONEIM 01/01/2022 TEL// +201064626369
+///==========================================================
+///
 class IsolateThread {
   Future<dynamic> startIsolate(isolateEntryPoint) {
     var completer = Completer<dynamic>();

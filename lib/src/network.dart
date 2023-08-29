@@ -11,18 +11,16 @@ export 'http_method.dart';
 /// CREATED BY MOHAMED GHONEIM 01/01/2022 TEL// +201064626369
 ///==========================================================
 ///
-
 abstract class Network {
   final String _baseUrl;
   Options? options;
 
-
-  Network(this._baseUrl,
-      {this.options});
+  Network(this._baseUrl, {this.options});
 
   final Dio _dio = Dio();
 
-  Future<Response?> request(HttpMethod method, {
+  Future<Response?> request(
+    HttpMethod method, {
     required String endpoint,
     Map<String, dynamic>? queryParameters,
     body,
@@ -42,17 +40,17 @@ abstract class Network {
           return response;
         case HttpMethod.post:
           response =
-          await _dio.post(url, data: body, options: _options(headers));
+              await _dio.post(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.put:
           response =
-          await _dio.put(url, data: body, options: _options(headers));
+              await _dio.put(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.patch:
           response =
-          await _dio.patch(url, data: body, options: _options(headers));
+              await _dio.patch(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.delete:
@@ -139,7 +137,9 @@ abstract class Network {
   }
 
   void logError(String text) {
-    debugPrint('\x1B[31m$text\x1B[0m',);
+    debugPrint(
+      '\x1B[31m$text\x1B[0m',
+    );
   }
 
   void logResponse(String text) {
