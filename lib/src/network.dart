@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'exception_handler.dart';
 import 'http_method.dart';
 export 'http_method.dart';
 
@@ -59,45 +60,24 @@ abstract class Network {
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         default:
-          throw {
-            "status_code": 500,
-            "message": "Invalid request method",
-            "errors": {
-              "errors": ["Invalid request method"]
-            }
-          };
+          throw "Invalid request method";
       }
     } on DioException catch (e) {
       logError('$method ===>>> $endpoint ===>>> ${e.message}\n');
-
       if (e.response?.data == null) {
-        throw {
-          "status_code": 500,
-          "message": e.message,
-          "errors": {
-            "errors": [e.message]
-          }
-        };
+        ExceptionHandler.handleException(e);
       }
       throw e.response?.data;
     } on SocketException catch (e) {
-      logError('$method ===>>> $endpoint ===>>> ${e.message}\n');
-      throw {
-        "status_code": 500,
-        "message": e.message,
-        "errors": {
-          "errors": [e.message]
-        }
-      };
+      ExceptionHandler.handleException(e);
+    } on FormatException catch (e) {
+      ExceptionHandler.handleException(e);
+    } on TimeoutException catch (e) {
+      ExceptionHandler.handleException(e);
+    } on HttpException catch (e) {
+      ExceptionHandler.handleException(e);
     } catch (e) {
-      logError('$method ===>>> $endpoint ===>>> ${e.toString()}\n');
-      throw {
-        "status_code": 500,
-        "message": e.toString(),
-        "errors": {
-          "errors": [e.toString()]
-        }
-      };
+      ExceptionHandler.handleException(e as Exception);
     }
     // }
   }
