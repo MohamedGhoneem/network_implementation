@@ -1,78 +1,36 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dio/dio.dart';
+
+import 'package:flutter/material.dart';
 
 import '../network_implementation.dart';
 
 class ExceptionHandler {
+   void handleException(
+      Exception exception, HttpMethod method, String endpoint) {
+    printError('$method ===>>> $endpoint ===>>> $exception\n');
 
-  static void handleException(Exception exception) {
-
-    switch (exception){
+    switch (exception) {
       case DioException():
-        break;
+        if (exception.response == null) {
+          throw exception;
+        }
+        throw exception.response?.data;
       case SocketException():
-        break;
+        throw exception;
       case FormatException():
-        break;
+        throw exception;
       case TimeoutException():
-        break;
+        throw exception;
       case HttpException():
-        break;
-      default :
-        break;
-
+        throw exception;
+      default:
+        throw exception;
     }
   }
 
-
-
-
-
-
-
-
-
-
-  // static void handleDioError(DioError error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.message}\n');
-  //   if (error.response == null) {
-  //     rethrow;
-  //   }
-  //   throw error.response?.data;
-  // }
-  //
-  // static void handleSocketError(SocketException error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.message}\n');
-  //   rethrow;
-  // }
-  //
-  // static void handleFormatError(FormatException error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.message}\n');
-  //   // Handle the format error appropriately (e.g., log an error message or throw custom exception)
-  //   rethrow;
-  // }
-  //
-  // static void handleTimeoutError(TimeoutException error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.message}\n');
-  //   // Handle the timeout error appropriately (e.g., log an error message or throw custom exception)
-  //   rethrow;
-  // }
-  //
-  // static void handleHttpError(HttpException error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.message}\n');
-  //   // Handle the HTTP error appropriately (e.g., log an error message or throw custom exception)
-  //   rethrow;
-  // }
-  //
-  // static void handleGenericError(dynamic error, HttpMethod method, String endpoint) {
-  //   printError('$method ===>>> $endpoint ===>>> ${error.toString()}\n');
-  //   // Handle the generic error appropriately (e.g., log an error message or throw custom exception)
-  //   rethrow;
-  // }
-
-  static void printError(String message) {
+  void printError(String message) {
     // You can customize the error logging/printing behavior here
-    print('\x1B[31m$message\x1B[0m');
+    debugPrint('\x1B[31m$message\x1B[0m');
   }
 }

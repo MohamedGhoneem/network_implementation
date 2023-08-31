@@ -12,7 +12,7 @@ export 'http_method.dart';
 /// CREATED BY MOHAMED GHONEIM 01/01/2022 TEL// +201064626369
 ///==========================================================
 ///
-abstract class Network {
+abstract class Network extends ExceptionHandler {
   final String _baseUrl;
   Options? options;
 
@@ -63,23 +63,18 @@ abstract class Network {
           throw "Invalid request method";
       }
     } on DioException catch (e) {
-      logError('$method ===>>> $endpoint ===>>> ${e.message}\n');
-      if (e.response?.data == null) {
-        ExceptionHandler.handleException(e);
-      }
-      throw e.response?.data;
+      handleException(e, method, endpoint);
     } on SocketException catch (e) {
-      ExceptionHandler.handleException(e);
+      handleException(e, method, endpoint);
     } on FormatException catch (e) {
-      ExceptionHandler.handleException(e);
+      handleException(e, method, endpoint);
     } on TimeoutException catch (e) {
-      ExceptionHandler.handleException(e);
+      handleException(e, method, endpoint);
     } on HttpException catch (e) {
-      ExceptionHandler.handleException(e);
+      handleException(e, method, endpoint);
     } catch (e) {
-      ExceptionHandler.handleException(e as Exception);
+      handleException(e as Exception, method, endpoint);
     }
-    // }
   }
 
   Options _options(Map<String, dynamic>? headers) {
@@ -114,12 +109,6 @@ abstract class Network {
             headers: headers);
       }
     }
-  }
-
-  void logError(String text) {
-    debugPrint(
-      '\x1B[31m$text\x1B[0m',
-    );
   }
 
   void logResponse(String text) {
