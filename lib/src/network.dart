@@ -21,12 +21,12 @@ abstract class Network extends ExceptionHandler {
   final Dio _dio = Dio();
 
   Future<Response?> request(
-    HttpMethod method, {
-    required String endpoint,
-    Map<String, dynamic>? queryParameters,
-    body,
-    Map<String, dynamic>? headers,
-  }) async {
+      HttpMethod method, {
+        required String endpoint,
+        Map<String, dynamic>? queryParameters,
+        body,
+        Map<String, dynamic>? headers,
+      }) async {
     String url = '$_baseUrl$endpoint';
     logRequest('\n$method ===>>> $endpoint');
     logRequest('queryParameters : $queryParameters');
@@ -41,17 +41,17 @@ abstract class Network extends ExceptionHandler {
           return response;
         case HttpMethod.post:
           response =
-              await _dio.post(url, data: body, options: _options(headers));
+          await _dio.post(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.put:
           response =
-              await _dio.put(url, data: body, options: _options(headers));
+          await _dio.put(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.patch:
           response =
-              await _dio.patch(url, data: body, options: _options(headers));
+          await _dio.patch(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.delete:
