@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:nirikshak/nirikshak.dart';
 import 'exception_handler.dart';
 import 'http_method.dart';
 export 'http_method.dart';
@@ -19,19 +20,22 @@ abstract class Network extends ExceptionHandler {
   Network(this._baseUrl, {this.options});
 
   final Dio _dio = Dio();
+  Nirikshak _nirikshak = Nirikshak();
 
   Future<Response?> request(
-      HttpMethod method, {
-        required String endpoint,
-        Map<String, dynamic>? queryParameters,
-        body,
-        Map<String, dynamic>? headers,
-      }) async {
+    HttpMethod method, {
+    required String endpoint,
+    Map<String, dynamic>? queryParameters,
+    body,
+    Map<String, dynamic>? headers,
+  }) async {
     String url = '$_baseUrl$endpoint';
     logRequest('\n$method ===>>> $endpoint');
     logRequest('queryParameters : $queryParameters');
     logRequest('body : $body');
     Response response;
+    _dio.interceptors.add(_nirikshak.getDioInterceptor());
+
     try {
       switch (method) {
         case HttpMethod.get:
@@ -41,17 +45,17 @@ abstract class Network extends ExceptionHandler {
           return response;
         case HttpMethod.post:
           response =
-          await _dio.post(url, data: body, options: _options(headers));
+              await _dio.post(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.put:
           response =
-          await _dio.put(url, data: body, options: _options(headers));
+              await _dio.put(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.patch:
           response =
-          await _dio.patch(url, data: body, options: _options(headers));
+              await _dio.patch(url, data: body, options: _options(headers));
           logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.delete:
@@ -118,5 +122,9 @@ abstract class Network extends ExceptionHandler {
 
   void logRequest(String text) {
     debugPrint('\x1B[33m$text\x1B[0m');
+  }
+
+  get nirikshak {
+    return _nirikshak;
   }
 }

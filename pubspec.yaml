@@ -11,6 +11,7 @@ dependencies:
   dio: ^5.3.2
   flutter:
     sdk: flutter
+  nirikshak: ^0.1.1
 
 dev_dependencies:
   flutter_test:
