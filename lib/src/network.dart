@@ -124,7 +124,7 @@ abstract class Network extends ExceptionHandler {
     debugPrint('\x1B[33m$text\x1B[0m');
   }
 
-  get nirikshak {
+  Nirikshak get nirikshak {
     return _nirikshak;
   }
 }
