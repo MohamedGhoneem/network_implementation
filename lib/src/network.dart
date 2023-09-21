@@ -20,7 +20,7 @@ abstract class Network extends ExceptionHandler {
   Network(this._baseUrl, {this.options});
 
   final Dio _dio = Dio();
-  Nirikshak _nirikshak = Nirikshak();
+  final Nirikshak _nirikshak = Nirikshak();
 
   Future<Response?> request(
     HttpMethod method, {
@@ -79,6 +79,7 @@ abstract class Network extends ExceptionHandler {
     } catch (e) {
       handleException(e as Exception, method, endpoint);
     }
+    return null;
   }
 
   Options _options(Map<String, dynamic>? headers) {
