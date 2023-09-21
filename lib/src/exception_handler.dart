@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../network_impl.dart';
+import '../network_implementation.dart';
 
 class ExceptionHandler {
   void handleException(Exception exception, HttpMethod method,
