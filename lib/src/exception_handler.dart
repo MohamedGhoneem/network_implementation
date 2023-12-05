@@ -12,10 +12,10 @@ class ExceptionHandler {
 
     switch (exception) {
       case DioException():
-        // if (exception.response == null) {
+        if (exception.response == null) {
           throw exception;
-        // }
-        // throw exception.response?.data;
+        }
+        throw exception.response?.data;
       case SocketException():
       case FormatException():
       case TimeoutException():

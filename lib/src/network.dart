@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -66,20 +65,19 @@ abstract class Network extends ExceptionHandler {
         default:
           throw "Invalid request method";
       }
-    } on DioException catch (e) {
-      handleException(e, method, endpoint);
-    } on SocketException catch (e) {
-      handleException(e, method, endpoint);
-    } on FormatException catch (e) {
-      handleException(e, method, endpoint);
-    } on TimeoutException catch (e) {
-      handleException(e, method, endpoint);
-    } on HttpException catch (e) {
-      handleException(e, method, endpoint);
+    } on DioException {
+      rethrow;
+    } on SocketException {
+      rethrow;
+    } on FormatException {
+      rethrow;
+    } on TimeoutException {
+      rethrow;
+    } on HttpException {
+      rethrow;
     } catch (e) {
-      handleException(e as Exception, method, endpoint);
+      rethrow;
     }
-    return null;
   }
 
   Options _options(Map<String, dynamic>? headers) {
