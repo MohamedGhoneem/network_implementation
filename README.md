@@ -3,8 +3,7 @@
 With `null-safety`
 
 ```dart 
-        dependencies:network_implementation: ^0.0.11
-
+  dependencies: network_implementation: ^0.0.12
 ```
 
 Add the dependency to your project and start using **flavorizer_config** #
