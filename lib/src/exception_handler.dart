@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../network_implementation.dart';
 
 class ExceptionHandler {
-  void handleException(Exception exception, HttpMethod method,
-      String endpoint) {
+  void handleException(
+      Exception exception, HttpMethod method, String endpoint) {
     printError('$method ===>>> $endpoint ===>>> $exception\n');
 
     switch (exception) {

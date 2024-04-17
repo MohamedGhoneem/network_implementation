@@ -1,39 +1,75 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
- Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
- List what your package can do. Maybe include images, gifs, or videos.
-
 ## Getting started
 
- List prerequisites and provide or point to information on how to
-start using the package.
+With `null-safety`
+
+```dart 
+        dependencies:network_implementation: ^0.0.11
+
+```
+
+Add the dependency to your project and start using **flavorizer_config** #
+
+Importing the package #
+
+```dart
+import 'package:network_implementation/network_implementation.dart';
+```
 
 ## Usage
 
- Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+To use this plugin, add flavorizer_config as a dependency in your pubspec.yaml file.
+
+## Example
+
+Here are an example that show you how to use this plugin.
+
+## main.dart
 
 ```dart
-const like = 'sample';
+ final NetworkImplementation _network = NetworkImplementation.instance(
+      'your base url',
+  options: Options(
+    // sendTimeout: const Duration(seconds: 5), // 5 seconds
+    // receiveTimeout: const Duration(seconds: 5), // 5 seconds
+    headers: {
+      'lang': 'en',
+      "Authorization":
+      'Bearer accessToken',
+    },
+  ),
+);
+
 ```
 
-## Additional information
+```dart
+Future getData() async {
+  try {
+    final response = await _network.request(
+      HttpMethod.get,
+      endpoint: 'getDataEndPoint',
+      queryParameters: {"param1":"param1"},
+      // body: {"param1":"param1"},
+      // headers: {
+      //   'Accept-Language': "en",
+      //   "Authorization": 'Bearer accessToken'
+      // }
+    );
+    return response;
+  } catch (e) {
+    return e;
+  }
+}
+```
 
- Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Improve
+
+Help me by reporting bugs, **submit new ideas** for features or anything else that you want to
+share.
+
+- Just [write an issue](https://github.com/MohamedGhoneem/network_implementation/issues) on GitHub. ✏️
+- And don't forget to hit the **like button** for this package ✌️
+
+## More
+
+Check out my other useful packages on [pub.dev](https://pub.dev/publishers/ghoneem.com/packages)
+
