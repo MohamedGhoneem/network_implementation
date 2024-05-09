@@ -99,7 +99,7 @@ abstract class Network extends ExceptionHandler {
     }
   }
 
-  // Nirikshak get nirikshak {
-  //   return _nirikshak;
-  // }
+  Nirikshak get nirikshak {
+    return _nirikshak;
+  }
 }
