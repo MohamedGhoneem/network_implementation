@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:nirikshak/nirikshak.dart';
 import 'exception_handler.dart';
 import 'http_method.dart';
@@ -29,9 +27,7 @@ abstract class Network extends ExceptionHandler {
     Map<String, dynamic>? headers,
   }) async {
     String url = '$_baseUrl$endpoint';
-    logRequest('\n$method ===>>> $endpoint');
-    logRequest('queryParameters : $queryParameters');
-    logRequest('body : $body');
+
     Response response;
     _dio.interceptors.add(_nirikshak.getDioInterceptor());
 
@@ -40,27 +36,22 @@ abstract class Network extends ExceptionHandler {
         case HttpMethod.get:
           response = await _dio.get(url,
               queryParameters: queryParameters, options: _options(headers));
-          logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.post:
           response =
               await _dio.post(url, data: body, options: _options(headers));
-          logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.put:
           response =
               await _dio.put(url, data: body, options: _options(headers));
-          logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.patch:
           response =
               await _dio.patch(url, data: body, options: _options(headers));
-          logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         case HttpMethod.delete:
           response = await _dio.delete(url,
               queryParameters: queryParameters, options: _options(headers));
-          logResponse('$method ===>>> $endpoint ===>>> $response\n');
           return response;
         default:
           throw "Invalid request method";
@@ -88,20 +79,14 @@ abstract class Network extends ExceptionHandler {
     if (headers == null || headers.isEmpty) {
       if (options != null) {
         //options?.headers = baseHeaders;
-        logRequest('headers : ${options?.headers}');
-
         return options!;
       } else {
-        logRequest('headers : $baseHeaders');
-
         return Options(
             sendTimeout: const Duration(seconds: 5), // 5 seconds
             receiveTimeout: const Duration(seconds: 5), // 5 seconds
             headers: baseHeaders);
       }
     } else {
-      logRequest('headers : $headers');
-
       if (options != null) {
         options?.headers = headers;
         return options!;
@@ -114,16 +99,7 @@ abstract class Network extends ExceptionHandler {
     }
   }
 
-  void logResponse(String text) {
-    log(text);
-    // log('\x1B[32m$text\x1B[0m');
-  }
-
-  void logRequest(String text) {
-    debugPrint('\x1B[33m$text\x1B[0m');
-  }
-
-  Nirikshak get nirikshak {
-    return _nirikshak;
-  }
+  // Nirikshak get nirikshak {
+  //   return _nirikshak;
+  // }
 }

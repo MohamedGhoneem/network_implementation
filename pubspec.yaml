@@ -1,6 +1,6 @@
 name: network_implementation
 description: Network Implementation package to handle HTTP requests based on dio package for Flutter.
-version: 0.0.12
+version: 0.0.13
 homepage: https://github.com/MohamedGhoneem/network_implementation
 
 environment:
