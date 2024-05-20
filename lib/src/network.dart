@@ -35,23 +35,33 @@ abstract class Network extends ExceptionHandler {
       switch (method) {
         case HttpMethod.get:
           response = await _dio.get(url,
-              queryParameters: queryParameters, options: _options(headers));
+              data: body,
+              queryParameters: queryParameters ?? {},
+              options: _options(headers));
           return response;
         case HttpMethod.post:
-          response =
-              await _dio.post(url, data: body, options: _options(headers));
+          response = await _dio.post(url,
+              data: body,
+              queryParameters: queryParameters ?? {},
+              options: _options(headers));
           return response;
         case HttpMethod.put:
-          response =
-              await _dio.put(url, data: body, options: _options(headers));
+          response = await _dio.put(url,
+              data: body,
+              queryParameters: queryParameters ?? {},
+              options: _options(headers));
           return response;
         case HttpMethod.patch:
-          response =
-              await _dio.patch(url, data: body, options: _options(headers));
+          response = await _dio.patch(url,
+              data: body,
+              queryParameters: queryParameters ?? {},
+              options: _options(headers));
           return response;
         case HttpMethod.delete:
           response = await _dio.delete(url,
-              queryParameters: queryParameters, options: _options(headers));
+              data: body,
+              queryParameters: queryParameters ?? {},
+              options: _options(headers));
           return response;
         default:
           throw "Invalid request method";
